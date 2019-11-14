@@ -12,7 +12,7 @@ const MONGODB_URL = 'mongodb://mongo:27017/users-test';
 
 class CustomWorld {
   constructor() {
-    this.appPort = '5000';
+    this.appPort = '5001';
     this.baseURL = `http://localhost:${this.appPort}`;
   }
 
