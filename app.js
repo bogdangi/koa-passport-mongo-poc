@@ -56,6 +56,15 @@ const createServer = (dependencies) => {
       .replace('{userName}', ctx.state.user.username);
   });
 
+  router.get('/healthz', ctx => {
+    if (mongoose.connection.readyState == 1) {
+      ctx.status = 200;
+      ctx.body = 'OK';
+    } else {
+      return ctx.throw(503, 'Unhealthy');
+    }
+  });
+
   const app = new Koa();
 
   app.use(bodyParser());

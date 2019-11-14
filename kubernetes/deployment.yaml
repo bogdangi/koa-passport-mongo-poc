@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+  labels:
+    app: web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: web
+
+        image: web-image-name:1.1.1
+
+        ports:
+        - containerPort: 5000
+          name: http
+          protocol: TCP
+
+        env:
+        - name: PORT
+          value: "5000"
+        - name: MONGODB_URL
+          value: "mongodb://mongo:27017/users"
+        - name: SESSION_SECRET
+          value: "Let's be secure here"
+
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+        
+        startupProbe:
+          httpGet:
+            path: /healthz
+            port: http
