@@ -30,6 +30,13 @@ const createServer = (dependencies) => {
       .replace('{csrfToken}', ctx.csrf);
   });
 
+  router.get('/logout', ctx => {
+    if(ctx.isAuthenticated()) ctx.logout();
+
+    ctx.body = fs
+      .readFileSync('views/logout.html', 'utf8');
+  });
+
   router.get('/login-failed', ctx => {
     ctx.type = 'html';
 
